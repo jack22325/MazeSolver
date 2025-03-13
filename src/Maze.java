@@ -53,12 +53,36 @@ public class Maze
                 paths.add(i);
             }
         }
+        int path = paths.getFirst();
         for(int i = 0; i < paths.size(); i++)
         {
-            for(int j = 0; j < maze.length; i++)
+            path = paths.get(i);
+            for(int j = 1; j < maze.length; i++)
             {
-                
+                if(!(maze[j][i].equals(".")))
+                {
+                    if(!(maze[j-1][i+1].equals(".")))
+                    {
+                        if(!(maze[j-1][i-1].equals(".")))
+                        {
+                            paths.remove(i);
+                        }
+                        else
+                        {
+                            paths.set(i, i);
+                        }
+                    }
+                    else
+                    {
+                        paths.set(i, i);
+                    }
+                }
+                else
+                {
+                    paths.set(i, i);
+                }
             }
         }
+        return paths;
     }
 }

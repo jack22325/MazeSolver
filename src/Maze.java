@@ -6,7 +6,9 @@ import java.util.Scanner;
 public class Maze
 {
     private final String file;
-    private ArrayList<Integer> paths = new ArrayList<>();
+    private int yCoord = 0;
+    private int xCoord = 0;
+    private int[][] sequence;
 
     public Maze(String maze)
     {
@@ -43,20 +45,20 @@ public class Maze
         return maze;
     }
 
-    public ArrayList<Integer> validStartingPaths()
+    public int startingPath()
     {
         String[][] maze = getMaze(file);
         for(int i = 0; i < maze.length; i++)
         {
             if(maze[0][i].equals("."))
             {
-                paths.add(i);
+                xCoord = i;
             }
         }
-        return paths;
+        return xCoord;
     }
 
-    public boolean canGoRight(int xCoord, int yCoord)
+    public boolean canGoRight()
     {
         boolean right = false;
         if(getMaze(file)[xCoord+1][yCoord].equals("."))
@@ -66,7 +68,7 @@ public class Maze
         return right;
     }
 
-    public boolean canGoLeft(int xCoord, int yCoord)
+    public boolean canGoLeft()
     {
         boolean left = false;
         if(getMaze(file)[xCoord-1][yCoord].equals("."))
@@ -76,7 +78,7 @@ public class Maze
         return left;
     }
 
-    public boolean canGoDown(int xCoord, int yCoord)
+    public boolean canGoDown()
     {
         boolean down = false;
         if(getMaze(file)[xCoord][yCoord-1].equals("."))
@@ -86,12 +88,14 @@ public class Maze
         return down;
     }
 
-    public int pathsThatWork()
+    public int[][] solution()
     {
-        int yCoord = 0;
-        for(int i = 0; i < validStartingPaths().size(); i++)
+        int[][] solutionArray = new int[getMaze(file).length][2];
+        String lastDirection = "";
+        if(canGoDown())
         {
-            if(canGoDown())
+            yCoord++;
+
         }
     }
 }

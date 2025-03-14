@@ -5,12 +5,13 @@ import java.util.Scanner;
 
 public class Maze
 {
-    private String file;
+    private final String file;
+    private ArrayList<Integer> paths = new ArrayList<>();
 
-    public Maze(String file)
+    public Maze(String maze)
     {
-        File f = new File("src/MazeTest");
-        this.file = f.toString();
+        File f = new File(maze);
+        file = f.toString();
     }
 
     public static String[][] getMaze(String fileName) {
@@ -45,7 +46,6 @@ public class Maze
     public ArrayList<Integer> validStartingPaths()
     {
         String[][] maze = getMaze(file);
-        ArrayList<Integer> paths = new ArrayList<>();
         for(int i = 0; i < maze.length; i++)
         {
             if(maze[0][i].equals("."))
@@ -53,36 +53,45 @@ public class Maze
                 paths.add(i);
             }
         }
-        int path = paths.getFirst();
-        for(int i = 0; i < paths.size(); i++)
-        {
-            path = paths.get(i);
-            for(int j = 1; j < maze.length; i++)
-            {
-                if(!(maze[j][i].equals(".")))
-                {
-                    if(!(maze[j-1][i+1].equals(".")))
-                    {
-                        if(!(maze[j-1][i-1].equals(".")))
-                        {
-                            paths.remove(i);
-                        }
-                        else
-                        {
-                            paths.set(i, i);
-                        }
-                    }
-                    else
-                    {
-                        paths.set(i, i);
-                    }
-                }
-                else
-                {
-                    paths.set(i, i);
-                }
-            }
-        }
         return paths;
+    }
+
+    public boolean canGoRight(int xCoord, int yCoord)
+    {
+        boolean right = false;
+        if(getMaze(file)[xCoord+1][yCoord].equals("."))
+        {
+            right = true;
+        }
+        return right;
+    }
+
+    public boolean canGoLeft(int xCoord, int yCoord)
+    {
+        boolean left = false;
+        if(getMaze(file)[xCoord-1][yCoord].equals("."))
+        {
+            left = true;
+        }
+        return left;
+    }
+
+    public boolean canGoDown(int xCoord, int yCoord)
+    {
+        boolean down = false;
+        if(getMaze(file)[xCoord][yCoord-1].equals("."))
+        {
+            down = true;
+        }
+        return down;
+    }
+
+    public int pathsThatWork()
+    {
+        int yCoord = 0;
+        for(int i = 0; i < validStartingPaths().size(); i++)
+        {
+            if(canGoDown())
+        }
     }
 }

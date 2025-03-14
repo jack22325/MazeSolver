@@ -90,12 +90,13 @@ public class Maze
 
     public int[][] solution()
     {
-        int[][] solutionArray = new int[getMaze(file).length][2];
+        ArrayList<String> solutionArray = new ArrayList<>();
+        solutionArray.add("{0, 0 }");
         String lastDirection = "";
-        if(canGoDown())
+        if((canGoDown())&&(!(lastDirection).equals("up")))
         {
             yCoord++;
-
+            lastDirection = "down";
         }
     }
 }

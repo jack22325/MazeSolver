@@ -88,15 +88,87 @@ public class Maze
         return down;
     }
 
-    public int[][] solution()
+    public String[][] editMaze()
     {
-        ArrayList<String> solutionArray = new ArrayList<>();
-        solutionArray.add("{0, 0 }");
-        String lastDirection = "";
-        if((canGoDown())&&(!(lastDirection).equals("up")))
+        String[][] editedMaze = getMaze(file);
+        while(yCoord<editedMaze.length)
         {
-            yCoord++;
-            lastDirection = "down";
+            if(xCoord<editedMaze[0].length)
+            {
+                if(editedMaze[yCoord][xCoord+1].equals("."))
+                {
+                    xCoord++;
+                    editedMaze[yCoord][xCoord] = "x";
+                }
+            }
+            else if(yCoord>0)
+            {
+                if(editedMaze[yCoord-1][xCoord].equals("."))
+                {
+                    yCoord--;
+                    editedMaze[yCoord][xCoord] = "x";
+                }
+            }
+            else if(editedMaze[yCoord+1][xCoord].equals("."))
+            {
+                yCoord++;
+                editedMaze[yCoord][xCoord] = "x";
+            }
+            else if(xCoord>0)
+            {
+                if(editedMaze[yCoord][xCoord-1].equals("."))
+                {
+                    xCoord--;
+                    editedMaze[yCoord][xCoord] = "x";
+                }
+            }
+            else
+            {
+                editedMaze[yCoord][xCoord] = "#";
+                for(int i = 0; i < editedMaze.length; i++)
+                {
+                    for(int j = 0; j <editedMaze[0].length; j++)
+                    {
+                        if(editedMaze[i][j].equals("x"))
+                        {
+                            editedMaze[i][j] = ".";
+                        }
+                    }
+                }
+            }
         }
+        return editedMaze;
+    }
+
+    public ArrayList<String> solution(String[][] maze)
+    {
+        ArrayList<String> path = new ArrayList<>();
+        path.add("[0,0]");
+        yCoord = 0;
+        xCoord = 0;
+        while(yCoord<maze.length)
+        {
+            if(maze[yCoord][xCoord+1].equals("."))
+            {
+                xCoord++;
+                path.add("[" + xCoord + "," + yCoord + "]");
+            }
+            else if(getMaze(file)[yCoord-1][xCoord].equals("."))
+            {
+                yCoord--;
+                path.add("[" + xCoord + "," + yCoord + "]");
+            }
+            else if(getMaze(file)[yCoord+1][xCoord].equals("."))
+            {
+                yCoord++;
+                path.add("[" + xCoord + "," + yCoord + "]");
+            }
+            else if(getMaze(file)[yCoord][xCoord-1].equals("."))
+            {
+                xCoord--;
+                path.add("[" + xCoord + "," + yCoord + "]");
+            }
+        }
+        return path;
     }
 }
